@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koko - Asisten Digital Bisnis Affiliate</title>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --card: #141821;
+    --border: #232a38;
+    --text: #e8ebf2;
+    --muted: #8b93a7;
+    --accent: #4ade80;
+    --accent2: #38bdf8;
+    --danger: #f87171;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0; }
+  h2 { font-size: 1.6rem; margin-bottom: 8px; text-align: center; }
+  .sub { color: var(--muted); text-align: center; margin-bottom: 32px; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 80px 0 56px; }
+  .avatar {
+    width: 96px; height: 96px; margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    box-shadow: 0 0 40px rgba(74, 222, 128, 0.25);
+  }
+  .hero h1 { font-size: 2.6rem; letter-spacing: -1px; }
+  .badge {
+    display: inline-block; margin: 14px 0;
+    padding: 6px 14px; border-radius: 999px;
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    color: var(--accent); font-size: 0.85rem; font-weight: 600;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.35); }
+    50% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+  }
+  .tagline { color: var(--muted); font-size: 1.15rem; max-width: 560px; margin: 0 auto; }
+
+  /* PROBLEM & SOLUTION */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+  }
+  .box.chaos { border-top: 3px solid var(--danger); }
+  .box.solution { border-top: 3px solid var(--accent); }
+  .box h3 { margin-bottom: 16px; font-size: 1.15rem; }
+  .box ul { list-style: none; }
+  .box li { padding: 8px 0; color: var(--muted); display: flex; gap: 10px; }
+  .box li b { color: var(--text); }
+
+  /* CAPABILITIES */
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .cap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 26px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .cap:hover { transform: translateY(-4px); border-color: var(--accent2); }
+  .cap .ico { font-size: 2rem; margin-bottom: 12px; }
+  .cap h3 { margin-bottom: 8px; font-size: 1.05rem; }
+  .cap p { color: var(--muted); font-size: 0.92rem; }
+
+  /* CHAT SIMULATION */
+  .chat-wrap {
+    max-width: 560px; margin: 0 auto;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; overflow: hidden;
+  }
+  .chat-head {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px; font-weight: 600;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  .chat-body {
+    height: 320px; overflow-y: auto; padding: 18px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .msg {
+    max-width: 85%; padding: 10px 14px; border-radius: 14px;
+    font-size: 0.93rem; animation: fadeIn 0.3s ease;
+  }
+  .msg.user { align-self: flex-end; background: var(--accent2); color: #04121c; border-bottom-right-radius: 4px; }
+  .msg.bot { align-self: flex-start; background: #1d2330; border-bottom-left-radius: 4px; }
+  .msg.hint { align-self: center; background: none; color: var(--muted); font-size: 0.85rem; }
+  .typing { display: flex; gap: 4px; padding: 14px; }
+  .typing span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--muted); animation: blink 1.2s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .scenarios {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 14px; border-top: 1px solid var(--border);
+  }
+  .scenarios button {
+    flex: 1 1 140px; padding: 10px 12px; cursor: pointer;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 0.85rem; transition: all 0.2s;
+  }
+  .scenarios button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .scenarios button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 64px 0 40px; border-top: 1px solid var(--border); }
+  footer h2 { margin-bottom: 20px; }
+  .cta {
+    display: inline-block; padding: 16px 36px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #04121c; font-weight: 700; font-size: 1.05rem; text-decoration: none;
+    box-shadow: 0 8px 30px rgba(74, 222, 128, 0.3);
+    transition: transform 0.2s;
+  }
+  .cta:hover { transform: scale(1.05); }
+  .credit { margin-top: 36px; color: var(--muted); font-size: 0.85rem; }
+
+  @media (max-width: 720px) {
+    .compare, .grid3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2.1rem; }
+    section { padding: 40px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="avatar">🤖</div>
+    <h1>Koko</h1>
+    <div class="badge">🟢 Status: Active &amp; Ready 24/7</div>
+    <p class="tagline">Asisten digital yang membantu merapikan dan mengolah data bisnis affiliate Anda.</p>
+  </div>
+</header>
+
+<!-- 2. PROBLEM & SOLUTION -->
+<section>
+  <div class="container">
+    <h2>Dari Berantakan Jadi Terarah</h2>
+    <p class="sub">Kenapa pelaku affiliate butuh Koko</p>
+    <div class="compare">
+      <div class="box chaos">
+        <h3>😵 The Chaos</h3>
+        <ul>
+          <li>❌ <span><b>Pendataan</b> tersebar di banyak catatan dan susah dilacak</span></li>
+          <li>❌ <span><b>Jual beli produk</b> memakan waktu dan mudah terlewat</span></li>
+          <li>❌ <span><b>Cari produk</b> yang tepat harus bolak-balik buka banyak tempat</span></li>
+        </ul>
+      </div>
+      <div class="box solution">
+        <h3>✨ The Solution</h3>
+        <ul>
+          <li>✅ <span><b>Memudahkan belanja</b>: cari dan pilih produk jadi cepat</span></li>
+          <li>✅ <span><b>Memudahkan analisis konten</b>: tahu konten mana yang paling menghasilkan</span></li>
+          <li>✅ <span>Data rapi dan terhubung otomatis ke tools harian Anda</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. CORE CAPABILITIES -->
+<section>
+  <div class="container">
+    <h2>Kemampuan Utama</h2>
+    <p class="sub">Tools yang terhubung dengan Koko</p>
+    <div class="grid3">
+      <div class="cap">
+        <div class="ico">📁</div>
+        <h3>Google Drive</h3>
+        <p>Menyimpan dan membaca data produk, laporan, dan rekap penjualan affiliate dengan rapi.</p>
+      </div>
+      <div class="cap">
+        <div class="ico">📅</div>
+        <h3>Google Calendar</h3>
+        <p>Menjadwalkan posting konten, promo, dan pengingat deadline kampanye.</p>
+      </div>
+      <div class="cap">
+        <div class="ico">📊</div>
+        <h3>Analisis &amp; Belanja</h3>
+        <p>Membantu mencari produk dan membaca performa konten agar keputusan lebih tepat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. INTERACTIVE SIMULATION -->
+<section>
+  <div class="container">
+    <h2>Coba Ngobrol dengan Koko</h2>
+    <p class="sub">Klik salah satu skenario di bawah</p>
+    <div class="chat-wrap">
+      <div class="chat-head"><span class="dot"></span> Koko · Online</div>
+      <div class="chat-body" id="chat">
+        <div class="msg hint">Pilih skenario untuk memulai simulasi 👇</div>
+      </div>
+      <div class="scenarios">
+        <button data-s="data">📝 Pendataan</button>
+        <button data-s="produk">🔎 Cari Produk</button>
+        <button data-s="konten">📈 Analisis Konten</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FOOTER & CTA -->
+<footer>
+  <div class="container">
+    <h2>Siap bantu bisnis affiliate Anda?</h2>
+    <a class="cta" href="https://wa.me/6281520461335" target="_blank" rel="noopener">💬 Hubungi via WhatsApp</a>
+    <p class="credit">Built with AI · AI Builder Bootcamp Showcase</p>
+  </div>
+</footer>
+
+<script>
+  const scenarios = {
+    data: {
+      user: "Koko, tolong rekap penjualan affiliate minggu ini dong.",
+      bot: "Siap! Saya ambil data dari Google Drive: 42 order, komisi Rp1.250.000. Produk terlaris: Headset Bluetooth (15 order). Rekap sudah saya simpan di folder \"Laporan Mingguan\" ✅"
+    },
+    produk: {
+      user: "Cari produk skincare yang lagi laris dan komisinya tinggi.",
+      bot: "Ketemu 3 kandidat: Serum Vit C (komisi 12%), Sunscreen SPF50 (10%), dan Moisturizer Gel (9%). Serum Vit C paling banyak terjual minggu ini 🔥 Mau saya simpan ke daftar produk?"
+    },
+    konten: {
+      user: "Konten mana yang paling menghasilkan bulan ini?",
+      bot: "Video review unboxing unggul: 68% klik ke link affiliate. Saran saya, buat 2 konten serupa minggu depan. Sudah saya jadwalkan di Google Calendar, Selasa dan Kamis pukul 19.00 📅"
+    }
+  };
+
+  const chat = document.getElementById("chat");
+  const buttons = document.querySelectorAll(".scenarios button");
+
+  function addMsg(text, type) {
+    const el = document.createElement("div");
+    el.className = "msg " + type;
+    el.textContent = text;
+    chat.appendChild(el);
+    chat.scrollTop = chat.scrollHeight;
+    return el;
+  }
+
+  function showTyping() {
+    const el = document.createElement("div");
+    el.className = "msg bot typing";
+    el.innerHTML = "<span></span><span></span><span></span>";
+    chat.appendChild(el);
+    chat.scrollTop = chat.scrollHeight;
+    return el;
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const s = scenarios[btn.dataset.s];
+      buttons.forEach(b => b.disabled = true);
+      chat.innerHTML = "";
+      addMsg(s.user, "user");
+      setTimeout(() => {
+        const typing = showTyping();
+        setTimeout(() => {
+          typing.remove();
+          addMsg(s.bot, "bot");
+          buttons.forEach(b => b.disabled = false);
+        }, 1600);
+      }, 600);
+    });
+  });
+</script>
+</body>
+</html>
