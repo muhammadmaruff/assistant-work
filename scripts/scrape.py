@@ -14,6 +14,7 @@ seen = set(open("data/seen.txt").read().split()) if os.path.exists("data/seen.tx
 
 
 SOCIAL = re.compile(r"(facebook|instagram|tiktok|threads|twitter|x)\.(com|net)/", re.I)
+BAD = re.compile(r"script\.google\.com|\b(seks|sex|porn|judi|slot|togel|casino)\b", re.I)
 LIMIT = CAP  # batas efektif; dipersempit per akun agar semua akun kebagian
 
 
@@ -69,6 +70,8 @@ for account, queries in cfg.items():
             if not res:  # tidak ada hasil 24 jam -> longgarkan ke 1 minggu
                 res = fc("search", {"query": q, "limit": 6, "lang": "id", "country": "id", "tbs": "qdr:w"}, 2).get("data", [])
             for r in res:
+                if BAD.search(r["url"] + " " + r.get("title", "") + " " + r.get("description", "")):
+                    continue  # buang spam/konten dewasa/judi
                 if r["url"] not in urls:
                     urls.add(r["url"]); items.append(r)
         got = tries = 0
