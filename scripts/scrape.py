@@ -13,6 +13,7 @@ os.makedirs("data", exist_ok=True)
 seen = set(open("data/seen.txt").read().split()) if os.path.exists("data/seen.txt") else set()
 
 
+SOCIAL = re.compile(r"(facebook|instagram|tiktok|threads|twitter|x)\.(com|net)/", re.I)
 LIMIT = CAP  # batas efektif; dipersempit per akun agar semua akun kebagian
 
 
@@ -74,8 +75,8 @@ for account, queries in cfg.items():
         for r in items:
             if got >= SCRAPE_PER_ACCOUNT or tries >= SCRAPE_PER_ACCOUNT + 3:
                 break
-            if r["url"] in seen:
-                continue
+            if r["url"] in seen or SOCIAL.search(r["url"]):
+                continue  # situs sosial ditolak Firecrawl; cukup pakai ringkasan pencarian
             tries += 1
             try:  # situs yang ditolak Firecrawl (403) dilewati, coba kandidat berikutnya
                 md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
