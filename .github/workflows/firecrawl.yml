@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       media:
-        description: "Satu media saja, mis. impas.id (kosong = semua)"
+        description: "Satu akun saja, mis. Spek Dulu (kosong = semua)"
         required: false
-      dry_run:
-        description: "Tes saja: hitung kandidat, tanpa scrape artikel"
-        type: boolean
-        default: false
+      cap:
+        description: "Batas kredit run ini"
+        required: false
+        default: "30"
   schedule:
     - cron: "0 22 * * *" # 05:00 WIB
 
@@ -27,7 +27,7 @@ jobs:
           DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
           DRIVE_TOKEN: ${{ secrets.DRIVE_TOKEN }}
           ONLY_MEDIA: ${{ inputs.media }}
-          DRY_RUN: ${{ inputs.dry_run }}
+          DAILY_CAP: ${{ inputs.cap || '30' }}
         run: python3 scripts/scrape.py
       - name: Simpan seen + fallback
         run: |

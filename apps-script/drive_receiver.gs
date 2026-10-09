@@ -2,11 +2,11 @@
 // Execute as: Me | Who has access: Anyone
 const SECRET = "GANTI_DENGAN_TOKEN_RAHASIA";
 const FOLDERS = {
-  "bicarablitar.com": "1akHh_fWNgwoFKtFfYnTGcj2K5UFVk2Wv",
-  "impas.id": "1_LOTiJlqfvaWin9CrwWWHDyhGYSB1oMd",
-  "jatimverse.id": "1jS-tWjpi148bamjqwJGOz0-h2FlrSMq3",
-  "pecelblitar.com": "1oTwVZs25M4jmEFJViPQfjqv16KMK8Fa7",
-  "serayunusantara.com": "1xWS1LaccU60AwE8QV83JkcInHGkRTHGp",
+  "Still Prabowo": "14-mA7dM7xEYjF43EERs8Be_n6BgozWNv",
+  "Political Party": "1DSapFdEOeFUGX6Q7hkd32ZdwAWaBGQue",
+  "Info Nahdliyyin": "1Vx1bIpMvSH9mflr37Uox0QGg_NPHUzh3",
+  "Spek Dulu": "1PiWoXUk6nyy58WB0Guxjnv0UhdzM9QSo",
+  "Blitar Nyaman": "1piMtKOR9TU1fv9y5j3vtFexsPLe4XlYB",
 };
 
 function doPost(e) {
