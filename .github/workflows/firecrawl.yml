@@ -1,0 +1,30 @@
+name: Firecrawl Scrape
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "URL tunggal (kosongkan untuk pakai urls.txt)"
+        required: false
+  schedule:
+    - cron: "0 23 * * *" # 06:00 WIB
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scrape
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+          EXTRA_URL: ${{ inputs.url }}
+        run: python3 scripts/scrape.py
+      - name: Commit hasil
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || (git commit -m "chore: hasil scrape $(date -u +%F)" && git push)
