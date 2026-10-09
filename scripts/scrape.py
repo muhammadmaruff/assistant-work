@@ -6,7 +6,7 @@ TOKEN = os.environ.get("DRIVE_TOKEN", "")
 ONLY = os.environ.get("ONLY_MEDIA", "").strip()
 CAP = int(os.environ.get("DAILY_CAP", "30"))      # batas kredit per run/hari
 SCRAPE_PER_ACCOUNT = int(os.environ.get("SCRAPE_PER_ACCOUNT", "2"))
-TODAY = datetime.date.today().isoformat()
+TODAY = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7))).date().isoformat()  # tanggal WIB
 used = 0
 
 os.makedirs("data", exist_ok=True)
