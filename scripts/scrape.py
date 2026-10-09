@@ -70,11 +70,23 @@ for account, queries in cfg.items():
             for r in res:
                 if r["url"] not in urls:
                     urls.add(r["url"]); items.append(r)
-        fresh = [r for r in items if r["url"] not in seen][:SCRAPE_PER_ACCOUNT]
-        for r in fresh:
-            md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
+        got = tries = 0
+        for r in items:
+            if got >= SCRAPE_PER_ACCOUNT or tries >= SCRAPE_PER_ACCOUNT + 3:
+                break
+            if r["url"] in seen:
+                continue
+            tries += 1
+            try:  # situs yang ditolak Firecrawl (403) dilewati, coba kandidat berikutnya
+                md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
+            except RuntimeError as e:
+                if str(e) == "CAP":
+                    raise
+                print(f"  lewati {r['url']}: {str(e)[:90]}", file=sys.stderr)
+                continue
             r["excerpt"] = re.sub(r"\n{3,}", "\n\n", md)[:2500]
             seen.add(r["url"])
+            got += 1
     except RuntimeError as e:
         print(f"  {e} (terpakai {used}/{CAP})", file=sys.stderr)
         if str(e) == "CAP" and used >= CAP:
