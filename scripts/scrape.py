@@ -5,7 +5,7 @@ HOOK = os.environ.get("DRIVE_WEBHOOK_URL", "")
 TOKEN = os.environ.get("DRIVE_TOKEN", "")
 ONLY = os.environ.get("ONLY_MEDIA", "").strip()
 CAP = int(os.environ.get("DAILY_CAP", "30"))      # batas kredit per run/hari
-SCRAPE_PER_ACCOUNT = int(os.environ.get("SCRAPE_PER_ACCOUNT", "3"))
+SCRAPE_PER_ACCOUNT = int(os.environ.get("SCRAPE_PER_ACCOUNT", "2"))
 TODAY = datetime.date.today().isoformat()
 used = 0
 
@@ -13,10 +13,13 @@ os.makedirs("data", exist_ok=True)
 seen = set(open("data/seen.txt").read().split()) if os.path.exists("data/seen.txt") else set()
 
 
+LIMIT = CAP  # batas efektif; dipersempit per akun agar semua akun kebagian
+
+
 def fc(path, body, cost):
-    """Panggil Firecrawl; berhenti total bila batas kredit harian akan terlewati."""
+    """Panggil Firecrawl; berhenti bila batas kredit akan terlewati."""
     global used
-    if used + cost > CAP:
+    if used + cost > LIMIT:
         raise RuntimeError("CAP")
     used += cost
     req = urllib.request.Request(
@@ -50,9 +53,11 @@ for account, queries in cfg.items():
     if stop or (ONLY and ONLY != account):
         continue
     print(f"== {account}")
+    n_acc = len(cfg) if not ONLY else 1
+    LIMIT = min(CAP, used + CAP // n_acc)  # jatah akun ini
     items, urls = [], set()
     try:
-        for q in queries:
+        for q in queries[:2]:
             res = fc("search", {"query": q, "limit": 6, "lang": "id", "country": "id", "tbs": "qdr:d"}, 2).get("data", [])
             if not res:  # tidak ada hasil 24 jam -> longgarkan ke 1 minggu
                 res = fc("search", {"query": q, "limit": 6, "lang": "id", "country": "id", "tbs": "qdr:w"}, 2).get("data", [])
@@ -65,8 +70,9 @@ for account, queries in cfg.items():
             r["excerpt"] = re.sub(r"\n{3,}", "\n\n", md)[:2500]
             seen.add(r["url"])
     except RuntimeError:
-        print(f"  Batas kredit {CAP} tercapai", file=sys.stderr)
-        stop = True
+        print(f"  Jatah kredit akun ini habis (terpakai {used}/{CAP})", file=sys.stderr)
+        if used >= CAP:
+            stop = True
     except Exception as e:
         print(f"  GAGAL {account}: {e}", file=sys.stderr)
     if not items:
