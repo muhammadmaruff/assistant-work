@@ -3,11 +3,15 @@ name: Firecrawl Scrape
 on:
   workflow_dispatch:
     inputs:
-      url:
-        description: "URL tunggal (kosongkan untuk pakai urls.txt)"
+      media:
+        description: "Satu akun saja, mis. Spek Dulu (kosong = semua)"
         required: false
+      cap:
+        description: "Batas kredit run ini"
+        required: false
+        default: "30"
   schedule:
-    - cron: "0 23 * * *" # 06:00 WIB
+    - cron: "0 22 * * *" # 05:00 WIB
 
 permissions:
   contents: write
@@ -20,11 +24,14 @@ jobs:
       - name: Scrape
         env:
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-          EXTRA_URL: ${{ inputs.url }}
+          DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
+          DRIVE_TOKEN: ${{ secrets.DRIVE_TOKEN }}
+          ONLY_MEDIA: ${{ inputs.media }}
+          DAILY_CAP: ${{ inputs.cap || '30' }}
         run: python3 scripts/scrape.py
-      - name: Commit hasil
+      - name: Simpan seen + fallback
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data
-          git diff --cached --quiet || (git commit -m "chore: hasil scrape $(date -u +%F)" && git push)
+          git diff --cached --quiet || (git commit -m "chore: scrape $(date -u +%F)" && git push)

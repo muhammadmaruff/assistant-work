@@ -1,26 +1,96 @@
-import os, sys, json, datetime, urllib.request
+import os, sys, re, json, datetime, urllib.request, urllib.error
 
 KEY = os.environ["FIRECRAWL_API_KEY"]
-urls = [u.strip() for u in open("urls.txt") if u.strip() and not u.startswith("#")]
-extra = os.environ.get("EXTRA_URL", "").strip()
-if extra:
-    urls = [extra]
+HOOK = os.environ.get("DRIVE_WEBHOOK_URL", "")
+TOKEN = os.environ.get("DRIVE_TOKEN", "")
+ONLY = os.environ.get("ONLY_MEDIA", "").strip()
+CAP = int(os.environ.get("DAILY_CAP", "30"))      # batas kredit per run/hari
+SCRAPE_PER_ACCOUNT = int(os.environ.get("SCRAPE_PER_ACCOUNT", "2"))
+TODAY = datetime.date.today().isoformat()
+used = 0
 
-today = datetime.date.today().isoformat()
-os.makedirs(f"data/{today}", exist_ok=True)
+os.makedirs("data", exist_ok=True)
+seen = set(open("data/seen.txt").read().split()) if os.path.exists("data/seen.txt") else set()
 
-for i, url in enumerate(urls):
+
+LIMIT = CAP  # batas efektif; dipersempit per akun agar semua akun kebagian
+
+
+def fc(path, body, cost):
+    """Panggil Firecrawl; berhenti bila batas kredit akan terlewati."""
+    global used
+    if used + cost > LIMIT:
+        raise RuntimeError("CAP")
     req = urllib.request.Request(
-        "https://api.firecrawl.dev/v1/scrape",
-        data=json.dumps({"url": url, "formats": ["markdown"], "onlyMainContent": True}).encode(),
-        headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"},
-    )
+        "https://api.firecrawl.dev/v1/" + path, data=json.dumps(body).encode(),
+        headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (compatible; assistant-work)"})
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
-            md = json.load(r)["data"]["markdown"]
-    except Exception as e:
-        print(f"GAGAL {url}: {e}", file=sys.stderr)
+            out = json.load(r)
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"Firecrawl {path} HTTP {e.code}: {e.read()[:300].decode('utf-8','replace')}")
+    used += cost  # dihitung hanya bila sukses
+    return out
+
+
+def deliver(account, name, content):
+    if HOOK:
+        try:
+            req = urllib.request.Request(HOOK, data=json.dumps(
+                {"token": TOKEN, "media": account, "files": [{"name": name, "content": content}]}).encode(),
+                headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=120) as r:
+                if json.load(r).get("ok"):
+                    print("  Drive OK")
+                    return
+        except urllib.error.HTTPError as e:
+            print(f"  Drive GAGAL HTTP {e.code}: {e.read()[:300].decode('utf-8','replace')}", file=sys.stderr)
+        except Exception as e:
+            print(f"  Drive GAGAL: {e}", file=sys.stderr)
+    d = f"data/{account}"
+    os.makedirs(d, exist_ok=True)
+    open(f"{d}/{name}", "w").write(content)
+    print(f"  Fallback: {d}/{name}")
+
+
+cfg = json.load(open("sources.json"))
+stop = False
+for account, queries in cfg.items():
+    if stop or (ONLY and ONLY != account):
         continue
-    with open(f"data/{today}/{i+1:02d}.md", "w") as f:
-        f.write(f"<!-- sumber: {url} -->\n\n{md}")
-    print(f"OK {url}")
+    print(f"== {account}")
+    n_acc = len(cfg) if not ONLY else 1
+    LIMIT = min(CAP, used + CAP // n_acc)  # jatah akun ini
+    items, urls = [], set()
+    try:
+        for q in queries[:2]:
+            res = fc("search", {"query": q, "limit": 6, "lang": "id", "country": "id", "tbs": "qdr:d"}, 2).get("data", [])
+            if not res:  # tidak ada hasil 24 jam -> longgarkan ke 1 minggu
+                res = fc("search", {"query": q, "limit": 6, "lang": "id", "country": "id", "tbs": "qdr:w"}, 2).get("data", [])
+            for r in res:
+                if r["url"] not in urls:
+                    urls.add(r["url"]); items.append(r)
+        fresh = [r for r in items if r["url"] not in seen][:SCRAPE_PER_ACCOUNT]
+        for r in fresh:
+            md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
+            r["excerpt"] = re.sub(r"\n{3,}", "\n\n", md)[:2500]
+            seen.add(r["url"])
+    except RuntimeError as e:
+        print(f"  {e} (terpakai {used}/{CAP})", file=sys.stderr)
+        if str(e) == "CAP" and used >= CAP:
+            stop = True
+    except Exception as e:
+        print(f"  GAGAL {account}: {e}", file=sys.stderr)
+    if not items:
+        continue
+    out = [f"# {account} — bahan utas {TODAY}", f"Kredit terpakai sejauh ini: {used}/{CAP}. Filter: 24 jam terakhir (jika kosong, 7 hari).\n", "## Berita/fakta"]
+    for r in items:
+        out.append(f"- **{r.get('title','')}** — {r.get('description','')}\n  {r['url']}")
+    out.append("\n## Isi artikel terpilih (untuk angka & kutipan)")
+    for r in items:
+        if r.get("excerpt"):
+            out.append(f"\n### {r.get('title','')}\nSumber: {r['url']}\n\n{r['excerpt']}")
+    deliver(account, f"{TODAY}_bahan-utas.md", "\n".join(out))
+
+open("data/seen.txt", "w").write("\n".join(sorted(seen)) + "\n")
+print(f"Total kredit terpakai (perkiraan): {used}/{CAP}")
