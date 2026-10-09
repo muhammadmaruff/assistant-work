@@ -55,6 +55,15 @@ def deliver(account, name, content):
     print(f"  Fallback: {d}/{name}")
 
 
+if os.environ.get("CHECK_DRIVE") == "true":  # uji koneksi Drive saja, 0 kredit Firecrawl
+    import hashlib
+    h = lambda t: hashlib.sha256(t.encode()).hexdigest()[:10]
+    expected = "https://script.google.com/macros/s/AKfycbwuR3ec9QpCXcjIYYFmgYOqwFr1vtD3VVjc4lfi-oW5p8JUM56gT3Si5FB_PywVOfx7/exec"
+    print(f"Secret URL: panjang={len(HOOK)} hash={h(HOOK)} | URL dari user: hash={h(expected)} -> {'SAMA' if HOOK == expected else 'BEDA'}")
+    print(f"Berakhiran /exec: {HOOK.endswith('/exec')}; token terisi: {bool(TOKEN)}")
+    deliver("Spek Dulu", "_tes-koneksi.md", "Tes koneksi GitHub -> Drive berhasil.")
+    sys.exit(0)
+
 cfg = json.load(open("sources.json"))
 stop = False
 for account, queries in cfg.items():

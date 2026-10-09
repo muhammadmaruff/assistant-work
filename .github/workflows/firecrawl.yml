@@ -6,6 +6,10 @@ on:
       media:
         description: "Satu akun saja, mis. Spek Dulu (kosong = semua)"
         required: false
+      cek_drive:
+        description: "Uji koneksi Drive saja (tanpa kredit)"
+        type: boolean
+        default: false
       cap:
         description: "Batas kredit run ini"
         required: false
@@ -27,6 +31,7 @@ jobs:
           DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
           DRIVE_TOKEN: ${{ secrets.DRIVE_TOKEN }}
           ONLY_MEDIA: ${{ inputs.media }}
+          CHECK_DRIVE: ${{ inputs.cek_drive }}
           DAILY_CAP: ${{ inputs.cap || '30' }}
         run: python3 scripts/scrape.py
       - name: Simpan seen + fallback
