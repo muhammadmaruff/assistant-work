@@ -1,0 +1,22 @@
+{
+  "bicarablitar.com": [
+    {"name": "blitar", "count": 10, "sources": ["https://blitarkota.go.id/berita", "https://blitarkab.go.id/berita"]},
+    {"name": "daerah", "count": 6, "sources": ["https://jatimprov.go.id/berita", "https://kedirikota.go.id/berita"]},
+    {"name": "nasional", "count": 4, "sources": ["https://www.komdigi.go.id/berita/siaran-pers", "https://setkab.go.id/category/siaran-pers/"]}
+  ],
+  "impas.id": [
+    {"name": "ekonomi", "count": 12, "sources": ["https://www.kemenkeu.go.id/informasi-publik/publikasi/siaran-pers", "https://ekon.go.id/publikasi/siaran-pers", "https://www.ojk.go.id/id/berita-dan-kegiatan/siaran-pers/default.aspx", "https://www.kemendag.go.id/berita/siaran-pers"]},
+    {"name": "data", "count": 8, "sources": ["https://www.bps.go.id/id/pressrelease", "https://www.bi.go.id/id/publikasi/ruang-media/news-release/default.aspx"]}
+  ],
+  "jatimverse.id": [
+    {"name": "jatim", "count": 20, "sources": ["https://jatimprov.go.id/berita", "https://www.surabaya.go.id/id/berita", "https://malangkota.go.id/berita", "https://sidoarjokab.go.id/berita", "https://kedirikota.go.id/berita", "https://blitarkota.go.id/berita"]}
+  ],
+  "pecelblitar.com": [
+    {"name": "topik", "count": 1, "search": "sambal pecel UMKM kuliner tradisional tren terbaru"}
+  ],
+  "serayunusantara.com": [
+    {"name": "nasional", "count": 3, "sources": ["https://www.komdigi.go.id/berita/siaran-pers", "https://setkab.go.id/category/siaran-pers/", "https://ekon.go.id/publikasi/siaran-pers"]},
+    {"name": "kediri", "count": 5, "sources": ["https://kedirikota.go.id/berita", "https://kedirikab.go.id/berita", "https://nganjukkab.go.id/berita", "https://tulungagung.go.id/berita", "https://blitarkota.go.id/berita", "https://trenggalekkab.go.id/berita"]},
+    {"name": "lain", "count": 5, "sources": ["https://jatimprov.go.id/berita", "https://www.surabaya.go.id/id/berita", "https://malangkota.go.id/berita"]}
+  ]
+}
