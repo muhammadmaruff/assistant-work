@@ -1,4 +1,4 @@
-import os, sys, re, json, datetime, urllib.request
+import os, sys, re, json, datetime, urllib.request, urllib.error
 
 KEY = os.environ["FIRECRAWL_API_KEY"]
 HOOK = os.environ.get("DRIVE_WEBHOOK_URL", "")
@@ -21,12 +21,16 @@ def fc(path, body, cost):
     global used
     if used + cost > LIMIT:
         raise RuntimeError("CAP")
-    used += cost
     req = urllib.request.Request(
         "https://api.firecrawl.dev/v1/" + path, data=json.dumps(body).encode(),
-        headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=120) as r:
-        return json.load(r)
+        headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (compatible; assistant-work)"})
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            out = json.load(r)
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"Firecrawl {path} HTTP {e.code}: {e.read()[:300].decode('utf-8','replace')}")
+    used += cost  # dihitung hanya bila sukses
+    return out
 
 
 def deliver(account, name, content):
@@ -39,6 +43,8 @@ def deliver(account, name, content):
                 if json.load(r).get("ok"):
                     print("  Drive OK")
                     return
+        except urllib.error.HTTPError as e:
+            print(f"  Drive GAGAL HTTP {e.code}: {e.read()[:300].decode('utf-8','replace')}", file=sys.stderr)
         except Exception as e:
             print(f"  Drive GAGAL: {e}", file=sys.stderr)
     d = f"data/{account}"
@@ -69,9 +75,9 @@ for account, queries in cfg.items():
             md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
             r["excerpt"] = re.sub(r"\n{3,}", "\n\n", md)[:2500]
             seen.add(r["url"])
-    except RuntimeError:
-        print(f"  Jatah kredit akun ini habis (terpakai {used}/{CAP})", file=sys.stderr)
-        if used >= CAP:
+    except RuntimeError as e:
+        print(f"  {e} (terpakai {used}/{CAP})", file=sys.stderr)
+        if str(e) == "CAP" and used >= CAP:
             stop = True
     except Exception as e:
         print(f"  GAGAL {account}: {e}", file=sys.stderr)
