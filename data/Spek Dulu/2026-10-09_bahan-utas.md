@@ -8,8 +8,8 @@ Kredit terpakai sejauh ini: 6/8. Filter: 24 jam terakhir (jika kosong, 7 hari).
   https://www.instagram.com/reel/DePC-G7J5nW/
 - **Samsung Galaxy A08 akhirnya rilis! Dibandingkan pendahulunya, HP ...** — 24 jam yang lalu · Samsung Galaxy A08 resmi hadir di Indonesia dengan harga mulai Rp2.999.000. Bukan cuma mengandalkan baterai jumbo 6.000 mAh, HP ini juga dibekali Helio G99+ ...
   https://www.instagram.com/reel/DeN4VUkvzU2/
-- **Spesifikasi Samsung Galaxy A35 Lengkap dan Harga Bekasnya ...** — 22 jam yang lalu · Desain dan Layar ; Layar, Super AMOLED, 6,6 inci, 1080 x 2340 piksel (~390 ppi) ; Refresh Rate, 120Hz (mode Adaptive & Standard) ; Kecerahan, 1.000 nit (HBM).
-  https://www.kitar.id/blogs/spesifikasi/spesifikasi-samsung-galaxy-a35?srsltid=AU7gw4XFrwBBwK56EIqXEyZNyMjgy1GqRWB68H2Zr3nrZxZoX3BMLZMi
+- **Spesifikasi Samsung Galaxy A35 Lengkap dan Harga Bekasnya ...** — 23 jam yang lalu · Desain dan Layar ; Layar, Super AMOLED, 6,6 inci, 1080 x 2340 piksel (~390 ppi) ; Refresh Rate, 120Hz (mode Adaptive & Standard) ; Kecerahan, 1.000 nit (HBM).
+  https://www.kitar.id/blogs/spesifikasi/spesifikasi-samsung-galaxy-a35?srsltid=AU7gw4XB47y0igsUkGyYf2nljAqZRAkwCetKgZwNtMD7kcimoa9jeh1w
 - **Harga dan spesifikasi Moto G37 4/64GB resmi di Indonesia** — 21 jam yang lalu · Motorola Akhirnya Rilis HP Baru Moto G67 Power di Indonesia Smartphone dengan baterai jumbo 7000mAh, Cocok buat driver online yang selalu On terus ...
   https://www.facebook.com/infogadgetpro/posts/464gb-rp-3799000-moto-g37-resmi-hadir-di-indonesia-berikut-harga-dan-spesifikasi/1549089647239032/
 - **5 Rekomendasi HP RAM Besar dan Harga Murah Terbaik 2026 ...** — 21 jam yang lalu · Untuk layarnya menggunakan panel IPS LCD berukuran 6,9 inci beresolusi 720 x 1600 piksel dan refresh rate 120Hz. Samsung Galaxy A07 hadir dengan RAM 8 GB dan ...
@@ -30,7 +30,7 @@ Kredit terpakai sejauh ini: 6/8. Filter: 24 jam terakhir (jika kosong, 7 hari).
 ## Isi artikel terpilih (untuk angka & kutipan)
 
 ### Spesifikasi Samsung Galaxy A35 Lengkap dan Harga Bekasnya ...
-Sumber: https://www.kitar.id/blogs/spesifikasi/spesifikasi-samsung-galaxy-a35?srsltid=AU7gw4XFrwBBwK56EIqXEyZNyMjgy1GqRWB68H2Zr3nrZxZoX3BMLZMi
+Sumber: https://www.kitar.id/blogs/spesifikasi/spesifikasi-samsung-galaxy-a35?srsltid=AU7gw4XB47y0igsUkGyYf2nljAqZRAkwCetKgZwNtMD7kcimoa9jeh1w
 
 [Langsung ke konten](https://www.kitar.id/blogs/spesifikasi/spesifikasi-samsung-galaxy-a35#main)
 
@@ -78,27 +78,35 @@ Dari sisi desain, bagian belakangnya kini menggunakan kaca, sementara bagian dep
 
 Dari sisi performa, Samsung membekalinya dengan _chipset_ Exynos 1380, _chipset_ yang sama dengan yang digunakan Galaxy A54 pada tahun sebelumnya, sehingga Galaxy A3
 
-### 5 Rekomendasi HP RAM Besar dan Harga Murah Terbaik 2026 ...
-Sumber: https://sumeks.disway.id/oto-tekno/read/798098/5-rekomendasi-hp-ram-besar-dan-harga-murah-terbaik-2026-bertenaga-dan-hemat/15
+### APPLE BIKIN GEBRAKAN DI IOS 27! FITUR AI INI BISA MENGUBAH ...
+Sumber: https://cworld.id/ios-18-bikin-iphone-makin-gila-11-fitur-ini-bisa-mengubah-cara-kamu-pakai-iphone/
 
-## Terkini
+[Skip to content](https://cworld.id/ios-18-bikin-iphone-makin-gila-11-fitur-ini-bisa-mengubah-cara-kamu-pakai-iphone/#main)
 
-- ![Herman Deru Pastikan Percepatan Lima Fly Over di Muara Enim Berjalan Sesuai Target](https://sumeks.disway.id/upload/medium/50c6d1b0bd945bd870967730b210d2f0.jpg)[Herman Deru Pastikan Percepatan Lima Fly Over di Muara Enim Berjalan Sesuai Target](https://sumeks.disway.id/headline/read/798165/herman-deru-pastikan-percepatan-lima-fly-over-di-muara-enim-berjalan-sesuai-target "Herman Deru Pastikan Percepatan Lima Fly Over di Muara Enim Berjalan Sesuai Target")
+DENPASAR – CELLULAR WORLD. Apple kembali membawa perubahan besar melalui iOS 27. Kali ini, pembaruan iPhone tidak hanya berbicara soal tampilan atau penyempurnaan kecil, tetapi juga menghadirkan pengalaman AI yang semakin dalam melalui **Siri AI**.
 
-#### [Herman Deru Pastikan Percepatan Lima Fly Over di Muara Enim Berjalan Sesuai Target](https://sumeks.disway.id/headline/read/798165/herman-deru-pastikan-percepatan-lima-fly-over-di-muara-enim-berjalan-sesuai-target "Herman Deru Pastikan Percepatan Lima Fly Over di Muara Enim Berjalan Sesuai Target")
+Apple menggambarkan Siri AI sebagai asisten yang lebih personal dan andal. Pengguna dapat berinteraksi secara natural, mencari informasi, menjalankan tindakan di berbagai aplikasi, hingga mendapatkan bantuan berdasarkan konteks personal yang tersimpan di iPhone.
 
-[HEADLINE](https://sumeks.disway.id/kategori/headline "HEADLINE")
+Namun, Siri AI bukan satu-satunya alasan iOS 27 menarik perhatian. Apple juga membawa peningkatan pada pengeditan foto, keamanan anak, Safari, performa sistem, konektivitas, aksesibilitas, hingga integrasi dengan AirPods.
 
-29 menit
+Lantas, apa saja perubahan yang membuat iOS 27 layak diperhatikan?
 
-- ![Tahapan MotoGP Mandalika 2026 Dimulai, ini Nama-nama Pebalap Indonesia Berpacu di Lintasan Sirkuit ](https://sumeks.disway.id/upload/medium/5d24f832111319e04f552b40356c5857.jpg)[Tahapan MotoGP Mandalika 2026 Dimulai, ini Nama-nama Pebalap Indonesia Berpacu di Lintasan Sirkuit ](https://sumeks.disway.id/headline/read/798163/tahapan-motogp-mandalika-2026-dimulai-ini-nama-nama-pebalap-indonesia-berpacu-di-lintasan-sirkuit "Tahapan MotoGP Mandalika 2026 Dimulai, ini Nama-nama Pebalap Indonesia Berpacu di Lintasan Sirkuit ")
+## Siri AI Jadi Bintang Utama di iOS 27
 
-#### [Tahapan MotoGP Mandalika 2026 Dimulai, ini Nama-nama Pebalap Indonesia Berpacu di Lintasan Sirkuit](https://sumeks.disway.id/headline/read/798163/tahapan-motogp-mandalika-2026-dimulai-ini-nama-nama-pebalap-indonesia-berpacu-di-lintasan-sirkuit "Tahapan MotoGP Mandalika 2026 Dimulai, ini Nama-nama Pebalap Indonesia Berpacu di Lintasan Sirkuit ")
+Perubahan paling mencolok di iOS 27 adalah hadirnya **Siri AI** yang didukung Apple Intelligence.
 
-[HEADLINE](https://sumeks.disway.id/kategori/headline "HEADLINE")
+Jika sebelumnya asisten digital lebih banyak digunakan untuk menjalankan perintah sederhana, Siri AI dirancang untuk memahami percakapan yang lebih natural. Pengguna dapat mengajukan pertanyaan terbuka, melakukan brainstorming untuk pekerjaan atau proyek kreatif, maupun melanjutkan percakapan secara dua arah.
 
-50 menit
+Yang membuatnya semakin menarik adalah kemampuannya memahami konteks personal. Siri AI dapat membantu menemukan foto tertentu, mencari email yang tersimpan di inbox, hingga menemukan catatan yang pernah dibuat di iPhone.
 
-- ![HP Infinix Note 40 Pro dan Hot 70 Cocok untuk Game dengan Layar AMOLED](https://sumeks.disway.id/upload/medium/b385a920186b27e8f7794841fc93656c.jpg)[HP Infinix Note 40 Pro dan Hot 70 Cocok untuk Game dengan Layar AMOLED](https://sumeks.disway.id/ekbis/read/798161/hp-infinix-note-40-pro-dan-hot-70-cocok-untuk-game-dengan-layar-amoled "HP Infinix Note 40 Pro dan Hot 70 Cocok untuk Game dengan Layar AMOLED")
+Dengan pendekatan seperti ini, Siri tidak hanya menjadi alat untuk menjalankan perintah, tetapi dapat berfungsi sebagai asisten yang memahami informasi yang relevan dengan aktivitas pengguna.
 
-#### [HP Infinix Note 40 Pro dan Hot 70 Cocok untuk Game dengan Layar AMOLED](https://sumeks.disway.id/ekbis/read/798161/hp-infinix-note-40-pro-dan-hot-70-cocok-untuk-game-dengan-layar-amoled "HP Infinix Note 40 Pro dan Hot 70 Cocok untuk Game dengan Layar AMOLED"
+## Siri AI Bisa Mengambil Tindakan di Berbagai Aplikasi
+
+Salah satu perkembangan penting pada iOS 27 adalah kemampuan Siri AI untuk mengambil tindakan berdasarkan konteks.
+
+Siri AI dapat melakukan berbagai aktivitas di aplikasi seperti Pesan, Musik, dan Pengingat. Misalnya, pengguna dapat meminta Siri untuk mengedit pesan yang baru dikirim atau menambahkan lagu tertentu ke playlist olahraga.
+
+Artinya, pengguna tidak selalu harus membuka aplikasi secara manual, mencari menu tertentu, lalu melakukan tindakan satu per satu.
+
+Konsep inilah yang membuat Siri AI terasa lebih seperti asisten digital. Perintah tidak hanya menghasilkan jawaban, tetapi dapat berlanjut menjadi tindakan yang benar-benar me
