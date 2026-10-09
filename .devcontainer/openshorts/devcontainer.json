@@ -1,0 +1,17 @@
+{
+  "name": "OpenShorts",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  // OpenShorts butuh RAM 8GB+ (Whisper, YOLO, MediaPipe). Pilih mesin 4-core / 16GB.
+  "hostRequirements": { "cpus": 4, "memory": "16gb", "storage": "32gb" },
+  "postCreateCommand": "bash .devcontainer/openshorts/setup.sh",
+  "postStartCommand": "bash .devcontainer/openshorts/start.sh",
+  "forwardPorts": [5175, 8000],
+  "portsAttributes": {
+    "5175": { "label": "OpenShorts Dashboard", "onAutoForward": "openBrowser" },
+    "8000": { "label": "OpenShorts API", "onAutoForward": "silent" },
+    "3100": { "label": "Renderer", "onAutoForward": "ignore" }
+  }
+}
