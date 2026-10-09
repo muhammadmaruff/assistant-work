@@ -13,6 +13,8 @@ os.makedirs("data", exist_ok=True)
 seen = set(open("data/seen.txt").read().split()) if os.path.exists("data/seen.txt") else set()
 
 
+SOCIAL = re.compile(r"(facebook|instagram|tiktok|threads|twitter|x)\.(com|net)/", re.I)
+BAD = re.compile(r"script\.google\.com|\b(seks|sex|porn|judi|slot|togel|casino)\b", re.I)
 LIMIT = CAP  # batas efektif; dipersempit per akun agar semua akun kebagian
 
 
@@ -53,6 +55,15 @@ def deliver(account, name, content):
     print(f"  Fallback: {d}/{name}")
 
 
+if os.environ.get("CHECK_DRIVE") == "true":  # uji koneksi Drive saja, 0 kredit Firecrawl
+    import hashlib
+    h = lambda t: hashlib.sha256(t.encode()).hexdigest()[:10]
+    expected = "https://script.google.com/macros/s/AKfycbwuR3ec9QpCXcjIYYFmgYOqwFr1vtD3VVjc4lfi-oW5p8JUM56gT3Si5FB_PywVOfx7/exec"
+    print(f"Secret URL: panjang={len(HOOK)} hash={h(HOOK)} | URL dari user: hash={h(expected)} -> {'SAMA' if HOOK == expected else 'BEDA'}")
+    print(f"Berakhiran /exec: {HOOK.endswith('/exec')}; token terisi: {bool(TOKEN)}")
+    deliver("Spek Dulu", "_tes-koneksi.md", "Tes koneksi GitHub -> Drive berhasil.")
+    sys.exit(0)
+
 cfg = json.load(open("sources.json"))
 stop = False
 for account, queries in cfg.items():
@@ -68,13 +79,27 @@ for account, queries in cfg.items():
             if not res:  # tidak ada hasil 24 jam -> longgarkan ke 1 minggu
                 res = fc("search", {"query": q, "limit": 6, "lang": "id", "country": "id", "tbs": "qdr:w"}, 2).get("data", [])
             for r in res:
+                if BAD.search(r["url"] + " " + r.get("title", "") + " " + r.get("description", "")):
+                    continue  # buang spam/konten dewasa/judi
                 if r["url"] not in urls:
                     urls.add(r["url"]); items.append(r)
-        fresh = [r for r in items if r["url"] not in seen][:SCRAPE_PER_ACCOUNT]
-        for r in fresh:
-            md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
+        got = tries = 0
+        for r in items:
+            if got >= SCRAPE_PER_ACCOUNT or tries >= SCRAPE_PER_ACCOUNT + 3:
+                break
+            if r["url"] in seen or SOCIAL.search(r["url"]):
+                continue  # situs sosial ditolak Firecrawl; cukup pakai ringkasan pencarian
+            tries += 1
+            try:  # situs yang ditolak Firecrawl (403) dilewati, coba kandidat berikutnya
+                md = fc("scrape", {"url": r["url"], "formats": ["markdown"], "onlyMainContent": True}, 1)["data"]["markdown"]
+            except RuntimeError as e:
+                if str(e) == "CAP":
+                    raise
+                print(f"  lewati {r['url']}: {str(e)[:90]}", file=sys.stderr)
+                continue
             r["excerpt"] = re.sub(r"\n{3,}", "\n\n", md)[:2500]
             seen.add(r["url"])
+            got += 1
     except RuntimeError as e:
         print(f"  {e} (terpakai {used}/{CAP})", file=sys.stderr)
         if str(e) == "CAP" and used >= CAP:
