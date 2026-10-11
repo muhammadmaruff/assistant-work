@@ -15,7 +15,7 @@ on:
         required: false
         default: "30"
   schedule:
-    - cron: "0 22 * * *" # 05:00 WIB
+    - cron: "23 21 * * *" # 04:23 WIB (menit sepi; biasanya mulai sekitar 05:00 WIB)
 
 permissions:
   contents: write
